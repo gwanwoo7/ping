@@ -5,14 +5,17 @@
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
   NEXT_TELEMETRY_DISABLED = "1"
+  NODE_VERSION = "18.17.0"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Remove the manual redirect as the Next.js plugin handles routing
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
 
 [functions]
   included_files = ["dist/**/*"]
+  node_bundler = "esbuild"
