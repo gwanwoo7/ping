@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
+import { NextPage } from 'next'
 import ProductClient from './ProductClient'
-import { SearchParams } from 'next/navigation'
 
 // This would typically come from your database
 const getProduct = async (id: string) => {
@@ -33,16 +33,16 @@ const getProduct = async (id: string) => {
   }
 }
 
-type PageParams = {
-  id: string;
+type SearchParams = { [key: string]: string | string[] | undefined }
+
+type GenerateMetadataProps = {
+  params: { id: string }
+  searchParams?: SearchParams
 }
 
-type Props = {
-  params: PageParams;
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: GenerateMetadataProps
+): Promise<Metadata> {
   const product = await getProduct(params.id)
   return {
     title: `${product.name} | Onki Spa`,
@@ -50,9 +50,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-interface PageProps {
-  params: PageParams;
-  searchParams?: { [key: string]: string | string[] | undefined };
+type PageProps = {
+  params: { id: string }
+  searchParams?: SearchParams
 }
 
 export default async function ProductPage({ params }: PageProps) {
