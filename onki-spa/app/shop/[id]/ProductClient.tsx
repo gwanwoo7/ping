@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
+import { CldImage } from 'next-cloudinary'
 import { useCart } from '@/app/context/CartContext'
 
 type ProductType = {
@@ -37,11 +37,12 @@ export default function ProductClient({ product }: { product: ProductType }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Product Image */}
         <div className="aspect-square relative rounded-lg overflow-hidden">
-          <Image
+          <CldImage
             src={product.image}
             alt={product.name}
-            fill
-            className="object-cover"
+            width={600}
+            height={600}
+            className="object-cover w-full h-full"
           />
         </div>
 

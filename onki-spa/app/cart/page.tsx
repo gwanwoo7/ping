@@ -1,7 +1,7 @@
 'use client'
 
 import { useCart } from '../context/CartContext'
-import Image from 'next/image'
+import { CldImage } from 'next-cloudinary'
 import Link from 'next/link'
 import { TrashIcon } from '@heroicons/react/24/outline'
 
@@ -41,11 +41,12 @@ export default function CartPage() {
           {state.items.map((item) => (
             <div key={item.id} className="flex gap-4 py-4 border-b">
               <div className="w-24 h-24 relative rounded-lg overflow-hidden">
-                <Image
+                <CldImage
                   src={item.image}
                   alt={item.name}
-                  fill
-                  className="object-cover"
+                  width={96}
+                  height={96}
+                  className="object-cover w-full h-full"
                 />
               </div>
 
