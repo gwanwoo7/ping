@@ -10,8 +10,8 @@ export async function POST(request: Request) {
     const { name, email, message } = await request.json()
 
     const msg = {
-      to: 'your-email@onki-spa.com', // Replace with your email
-      from: 'notifications@onki-spa.com', // Replace with your verified sender
+      to: 'sales@onkispa.com', // Updated to your email
+      from: 'notifications@onkispa.com', // Replace with your verified sender
       subject: `New Contact Form Submission from ${name}`,
       text: `
         Name: ${name}
@@ -23,6 +23,7 @@ export async function POST(request: Request) {
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong> ${message}</p>
+        <p><strong>Reply to:</strong> ${email}</p>
       `,
     }
 

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { CldImage } from 'next-cloudinary'
 import { useCart } from '@/app/context/CartContext'
+import CartModal from '@/app/components/CartModal'
 
 type ProductType = {
   id: string
@@ -17,6 +18,7 @@ type ProductType = {
 
 export default function ProductClient({ product }: { product: ProductType }) {
   const [quantity, setQuantity] = useState(1)
+  const [showModal, setShowModal] = useState(false)
   const { dispatch } = useCart()
 
   const addToCart = () => {
@@ -30,6 +32,7 @@ export default function ProductClient({ product }: { product: ProductType }) {
         quantity,
       },
     })
+    setShowModal(true)
   }
 
   return (
@@ -111,6 +114,12 @@ export default function ProductClient({ product }: { product: ProductType }) {
           </div>
         </div>
       </div>
+
+      <CartModal 
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        productName={product.name}
+      />
     </div>
   )
 }

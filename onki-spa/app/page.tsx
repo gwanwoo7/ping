@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { CldImage } from 'next-cloudinary'
+import ProductCard from './components/ProductCard'
+import { products } from './data/products'
 
 export default function Home() {
   return (
@@ -41,7 +43,17 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display text-center mb-12">Featured Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Product cards will be added here */}
+            {products.slice(0, 3).map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link
+              href="/shop"
+              className="inline-block bg-primary text-white px-8 py-3 rounded-full hover:bg-primary-light transition-colors"
+            >
+              View All Products
+            </Link>
           </div>
         </div>
       </section>
