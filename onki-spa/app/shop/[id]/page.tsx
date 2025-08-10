@@ -1,9 +1,19 @@
 import { Metadata } from 'next'
-import { NextPage } from 'next'
 import ProductClient from './ProductClient'
 
+// Define return type for product data
+type Product = {
+  id: string
+  name: string
+  price: number
+  image: string
+  description: string
+  benefits: string[]
+  ingredients: string[]
+  instructions: string[]
+}
 // This would typically come from your database
-const getProduct = async (id: string) => {
+const getProduct = async (id: string): Promise<Product> => {
   // Mock product data
   return {
     id,
@@ -33,16 +43,11 @@ const getProduct = async (id: string) => {
   }
 }
 
-type SearchParams = { [key: string]: string | string[] | undefined }
-
-type GenerateMetadataProps = {
-  params: { id: string }
-  searchParams?: SearchParams
-}
-
-export async function generateMetadata(
-  { params }: GenerateMetadataProps
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const product = await getProduct(params.id)
   return {
     title: `${product.name} | Onki Spa`,
@@ -50,12 +55,11 @@ export async function generateMetadata(
   }
 }
 
-type PageProps = {
-  params: { id: string }
-  searchParams?: SearchParams
-}
-
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const product = await getProduct(params.id)
   return <ProductClient product={product} />
 }
