@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useCart } from '@/app/context/CartContext'
 
@@ -38,7 +38,15 @@ const getProduct = async (id: string) => {
 export default function ProductPage({ params }: { params: { id: string } }) {
   const [quantity, setQuantity] = useState(1)
   const { dispatch } = useCart()
-  const product = getProduct(params.id) // In a real app, this would be async
+  const [product, setProduct] = useState<Awaited<ReturnType<typeof getProduct>> | null>(null)
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const data = await getProduct(params.id)
+      setProduct(data)
+    }
+    fetchProduct()
+  }, [params.id])
 
   const addToCart = () => {
     dispatch({
@@ -51,6 +59,14 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         quantity,
       },
     })
+  }
+
+  if (!product) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   return (
