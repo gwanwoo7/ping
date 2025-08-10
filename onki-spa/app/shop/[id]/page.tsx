@@ -20,7 +20,8 @@ const getProduct = async (id: string): Promise<Product> => {
     name: 'Eucalyptus & Menthol Shower Steamer',
     price: 14.99,
     image: '/images/products/eucalyptus-steamer.jpg',
-    description: 'Transform your shower into a spa-like experience with our invigorating Eucalyptus & Menthol shower steamer. This aromatherapy tablet releases therapeutic vapors as it dissolves, helping to clear your airways and refresh your senses.',
+    description:
+      'Transform your shower into a spa-like experience with our invigorating Eucalyptus & Menthol shower steamer. This aromatherapy tablet releases therapeutic vapors as it dissolves, helping to clear your airways and refresh your senses.',
     benefits: [
       'Opens airways and promotes deep breathing',
       'Perfect for morning showers or when feeling congested',
@@ -46,9 +47,10 @@ const getProduct = async (id: string): Promise<Product> => {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }): Promise<Metadata> {
-  const product = await getProduct(params.id)
+  const { id } = await params
+  const product = await getProduct(id)
   return {
     title: `${product.name} | Onki Spa`,
     description: product.description,
@@ -58,8 +60,9 @@ export async function generateMetadata({
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }) {
-  const product = await getProduct(params.id)
+  const { id } = await params
+  const product = await getProduct(id)
   return <ProductClient product={product} />
 }
