@@ -8,7 +8,10 @@ const nextConfig = {
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: 'dwzkhpgtc',
   },
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ['localhost:3000', 'localhost:8888'],
+      bodySizeLimit: '2mb'
+    },
   },
   // Enable static exports for Netlify
   output: 'standalone',
